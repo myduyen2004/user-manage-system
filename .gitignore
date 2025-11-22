@@ -1,0 +1,31 @@
+# Backend (Java/Spring Boot)
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/.idea/
+backend/*.iml
+backend/*.iws
+backend/*.ipr
+
+# Frontend (React)
+frontend-web/node_modules/
+frontend-web/dist/
+frontend-web/build/
+frontend-web/.vite/
+frontend-web/.env.local
+frontend-web/.env.production
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
