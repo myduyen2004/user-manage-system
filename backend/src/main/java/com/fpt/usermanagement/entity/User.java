@@ -31,6 +31,9 @@ public class User {
     
     @Column(nullable = false)
     private String fullName;
+
+    @Column(length = 20)
+    private String phoneNumber;
     
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
