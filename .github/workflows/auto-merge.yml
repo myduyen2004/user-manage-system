@@ -1,0 +1,48 @@
+# .github/workflows/smart-auto-merge.yml
+name: 🧠 Smart Auto-Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+jobs:
+  check-and-merge:
+    name: Check & Auto-Merge
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+      
+      - name: 🔍 Wait for CI/CD
+        uses: fountainhead/action-wait-for-check@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: 📊 Pipeline Summary
+          ref: ${{ github.event.pull_request.head.sha }}
+      
+      - name: 🔍 Check for Conflicts
+        id: conflict-check
+        run: |
+          git fetch origin main
+          git merge-base --is-ancestor origin/main HEAD && echo "no-conflict=true" >> $GITHUB_OUTPUT || echo "no-conflict=false" >> $GITHUB_OUTPUT
+      
+      - name: ✅ Verify All Conditions
+        if: steps.conflict-check.outputs.no-conflict == 'true'
+        run: |
+          echo "✅ All conditions met:"
+          echo "  ✅ CI/CD passed"
+          echo "  ✅ No conflicts"
+          echo "  ✅ Ready to merge!"
+      
+      - name: 🤖 Auto-Merge
+        if: steps.conflict-check.outputs.no-conflict == 'true'
+        uses: pascalgn/automerge-action@v0.16.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_LABELS: "automerge,!work-in-progress"
+          MERGE_METHOD: "squash"
+          MERGE_COMMIT_MESSAGE: "pull-request-title"
+          MERGE_RETRIES: "6"
+          MERGE_RETRY_SLEEP: "10000"
