@@ -94,7 +94,7 @@ jobs:
       
       - name: 🔨 Build APK
         run: |
-          cd mobile-app
+          cd mobile_app
           flutter build apk --debug
       
       - name: 📦 Upload APK
