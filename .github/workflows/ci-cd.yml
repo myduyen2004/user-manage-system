@@ -89,7 +89,7 @@ jobs:
       
       - name: 📚 Install dependencies
         run: |
-          cd mobile-app
+          cd mobile_app
           flutter pub get
       
       - name: 🔨 Build APK
