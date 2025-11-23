@@ -31,6 +31,10 @@ public class User {
     
     @Column(nullable = false)
     private String fullName;
+
+    @Column(length = 500);
+    private String avatarUrl;
+    
     
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
