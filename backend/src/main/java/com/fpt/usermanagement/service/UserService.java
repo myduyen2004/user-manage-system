@@ -85,6 +85,10 @@ public class UserService {
                 .map(this::convertToUserResponse)
                 .collect(Collectors.toList());
     }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
     
     // Get user by ID
     public UserResponse getUserById(Long id) {
@@ -150,4 +154,5 @@ public class UserService {
             user.getCreatedAt().toString()
         );
     }
+
 }
